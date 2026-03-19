@@ -200,6 +200,18 @@ export default function LocaleHomeClient({ locale }: { locale: Locale }) {
           </section>
         ) : null}
 
+        <nav className="flex gap-4 text-sm">
+          <Link href={`/${locale}/about`} className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t(locale, "navAbout")}
+          </Link>
+          <Link href={`/${locale}/contact`} className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t(locale, "navContact")}
+          </Link>
+          <Link href={`/${locale}/privacy`} className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t(locale, "navPrivacy")}
+          </Link>
+        </nav>
+
         <footer className="text-xs leading-5 text-zinc-500 dark:text-zinc-500">
           {t(locale, "footer")}
         </footer>
