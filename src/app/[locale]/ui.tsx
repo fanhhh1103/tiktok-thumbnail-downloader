@@ -210,6 +210,9 @@ export default function LocaleHomeClient({ locale }: { locale: Locale }) {
           <Link href={`/${locale}/privacy`} className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
             {t(locale, "navPrivacy")}
           </Link>
+          <Link href={`/${locale}/terms`} className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            {t(locale, "navTerms")}
+          </Link>
         </nav>
 
         <footer className="text-xs leading-5 text-zinc-500 dark:text-zinc-500">
