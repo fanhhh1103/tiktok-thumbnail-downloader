@@ -1,0 +1,321 @@
+export const locales = ["en", "zh", "ja", "es"] as const;
+export type Locale = (typeof locales)[number];
+export const defaultLocale: Locale = "en";
+
+export function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
+const dict = {
+  en: {
+    appTitle: "TikTok Thumbnail Downloader",
+    appSubtitle:
+      "Paste a TikTok video link, resolve the thumbnail, then download it. (oEmbed first, HTML fallback)",
+    inputLabel: "TikTok URL",
+    inputPlaceholder: "e.g. https://www.tiktok.com/@.../video/...",
+    resolveBtn: "Resolve thumbnail",
+    resolving: "Resolving…",
+    invalidUrl: "Please enter a valid TikTok URL.",
+    parseFailed: "Resolve failed. Please try again later.",
+    networkError: "Network error. Please try again later.",
+    source: "Source",
+    expanded: "Expanded URL",
+    titleFallback: "(No title)",
+    author: "Author",
+    download: "Download",
+    openOriginal: "Open original",
+    footer:
+      "Tip: If oEmbed is blocked, the app will try an HTML meta/ld+json fallback automatically.",
+    navAbout: "About",
+    navContact: "Contact",
+    navPrivacy: "Privacy Policy",
+    navTerms: "Terms of Use",
+    aboutTitle: "About Us",
+    aboutDescription:
+      "TikTok Thumbnail Downloader is a free online tool that helps you download video thumbnails from TikTok.",
+    aboutFeature1: "Fast and free to use",
+    aboutFeature2: "No installation required",
+    aboutFeature3: "Support for multiple languages",
+    contactTitle: "Contact Us",
+    contactDescription: "Have questions or suggestions? We'd love to hear from you.",
+    contactEmail: "Email",
+    contactEmailPlaceholder: "your@email.com",
+    contactMessage: "Message",
+    contactMessagePlaceholder: "Your message...",
+    contactSubmit: "Send Message",
+    contactSent: "Message sent! We'll get back to you soon.",
+    contactError: "Failed to send message. Please try again.",
+    privacyTitle: "Privacy Policy",
+    privacyDescription: "Your privacy is important to us.",
+    privacyCollectTitle: "Information We Collect",
+    privacyCollectDescription:
+      "We do not collect any personal information. The only data we process is the TikTok URL you provide to resolve thumbnails.",
+    privacyUseTitle: "How We Use Information",
+    privacyUseDescription:
+      "The TikTok URL you submit is used solely to retrieve the video thumbnail. We do not store, share, or sell any user data.",
+    privacyThirdTitle: "Third-Party Services",
+    privacyThirdDescription:
+      "Our service uses TikTok's oEmbed API to fetch video information. We are not responsible for TikTok's data practices.",
+    privacyCookiesTitle: "Cookies",
+    privacyCookiesDescription: "We do not use cookies to track users.",
+    privacyChangesTitle: "Changes to This Policy",
+    privacyChangesDescription:
+      "We may update this privacy policy from time to time. Any changes will be posted on this page.",
+    privacyContactTitle: "Contact Us",
+    privacyContactDescription:
+      "If you have any questions about this privacy policy, please contact us.",
+    termsTitle: "Terms of Use",
+    termsDescription: "Please read these terms carefully before using our service.",
+    termsAcceptTitle: "Acceptance of Terms",
+    termsAcceptDescription:
+      "By accessing and using this service, you accept and agree to be bound by these terms. If you do not agree, please do not use this service.",
+    termsUseTitle: "Permitted Use",
+    termsUseDescription:
+      "This tool is provided for personal, non-commercial use only. You may use it solely to access thumbnails of TikTok videos you have the right to view. Any automated, bulk, or commercial use is prohibited.",
+    termsIpTitle: "Intellectual Property",
+    termsIpDescription:
+      "All thumbnails retrieved via this tool remain the property of their respective creators and rights holders. This service does not claim ownership of any content retrieved from TikTok.",
+    termsDisclaimerTitle: "Disclaimer",
+    termsDisclaimerDescription:
+      "This service is provided 'as is' without warranties of any kind. We are not affiliated with, endorsed by, or sponsored by TikTok or ByteDance Ltd. in any way.",
+    termsChangesTitle: "Changes to Terms",
+    termsChangesDescription:
+      "We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.",
+    termsContactTitle: "Contact",
+    termsContactDescription:
+      "If you have any questions about these terms, please feel free to contact us.",
+  },
+  zh: {
+    appTitle: "TikTok 视频封面下载器",
+    appSubtitle: "粘贴 TikTok 视频链接，解析封面并下载。（优先 oEmbed，失败自动兜底）",
+    inputLabel: "TikTok 链接",
+    inputPlaceholder: "例如：https://www.tiktok.com/@.../video/...",
+    resolveBtn: "解析封面",
+    resolving: "解析中…",
+    invalidUrl: "请输入一个有效的 TikTok 链接。",
+    parseFailed: "解析失败，请稍后再试。",
+    networkError: "网络异常，请稍后再试。",
+    source: "来源",
+    expanded: "已展开短链",
+    titleFallback: "（无标题）",
+    author: "作者",
+    download: "下载封面",
+    openOriginal: "打开原图",
+    footer: "提示：若 oEmbed 受限，会自动尝试 HTML meta/ld+json 兜底解析。",
+    navAbout: "关于我们",
+    navContact: "联系我们",
+    navPrivacy: "隐私政策",
+    navTerms: "使用条款",
+    aboutTitle: "关于我们",
+    aboutDescription:
+      "TikTok 视频封面下载器是一款免费的在线工具，帮助您下载 TikTok 视频的缩略图。",
+    aboutFeature1: "快速免费使用",
+    aboutFeature2: "无需安装",
+    aboutFeature3: "支持多种语言",
+    contactTitle: "联系我们",
+    contactDescription: "有问题或建议？我们很乐意听到您的声音。",
+    contactEmail: "邮箱",
+    contactEmailPlaceholder: "your@email.com",
+    contactMessage: "留言",
+    contactMessagePlaceholder: "您的留言...",
+    contactSubmit: "发送消息",
+    contactSent: "消息已发送！我们会尽快回复您。",
+    contactError: "发送失败，请重试。",
+    privacyTitle: "隐私政策",
+    privacyDescription: "您的隐私对我们很重要。",
+    privacyCollectTitle: "我们收集的信息",
+    privacyCollectDescription:
+      "我们不收集任何个人信息。我们处理的唯一数据是您提供的用于解析缩略图的 TikTok 链接。",
+    privacyUseTitle: "信息的使用方式",
+    privacyUseDescription:
+      "您提交的 TikTok 链接仅用于获取视频缩略图。我们不会存储、分享或出售任何用户数据。",
+    privacyThirdTitle: "第三方服务",
+    privacyThirdDescription:
+      "我们的服务使用 TikTok 的 oEmbed API 来获取视频信息。我们不对 TikTok 的数据实践负责。",
+    privacyCookiesTitle: "Cookies",
+    privacyCookiesDescription: "我们不使用 cookies 来跟踪用户。",
+    privacyChangesTitle: "政策变更",
+    privacyChangesDescription:
+      "我们可能会不定期更新此隐私政策，任何变更将发布在本页面上。",
+    privacyContactTitle: "联系我们",
+    privacyContactDescription: "如果您对此隐私政策有任何疑问，请联系我们。",
+    termsTitle: "使用条款",
+    termsDescription: "使用本服务前，请仔细阅读以下条款。",
+    termsAcceptTitle: "条款接受",
+    termsAcceptDescription:
+      "访问或使用本服务，即表示您接受并同意遵守本条款。如您不同意，请勿使用本服务。",
+    termsUseTitle: "允许的使用方式",
+    termsUseDescription:
+      "本工具仅供个人非商业用途使用。您只能使用本工具访问您有权查看的 TikTok 视频封面。禁止任何自动化、批量或商业用途。",
+    termsIpTitle: "知识产权",
+    termsIpDescription:
+      "通过本工具获取的所有缩略图均归其各自的创作者和权利持有人所有。本服务不主张对从 TikTok 获取的任何内容的所有权。",
+    termsDisclaimerTitle: "免责声明",
+    termsDisclaimerDescription:
+      "本服务按'现状'提供，不提供任何形式的保证。本服务与 TikTok 或字节跳动没有任何关联、认可或赞助关系。",
+    termsChangesTitle: "条款变更",
+    termsChangesDescription:
+      "我们保留随时修改本条款的权利。变更后继续使用本服务即视为接受新条款。",
+    termsContactTitle: "联系方式",
+    termsContactDescription: "如对本条款有任何疑问，欢迎联系我们。",
+  },
+  ja: {
+    appTitle: "TikTok サムネイルダウンローダー",
+    appSubtitle:
+      "TikTok の動画リンクを貼り付けてサムネイルを解析し、ダウンロードします。（oEmbed 優先、失敗時は HTML でフォールバック）",
+    inputLabel: "TikTok URL",
+    inputPlaceholder: "例：https://www.tiktok.com/@.../video/...",
+    resolveBtn: "解析する",
+    resolving: "解析中…",
+    invalidUrl: "有効な TikTok URL を入力してください。",
+    parseFailed: "解析に失敗しました。しばらくしてから再試行してください。",
+    networkError: "ネットワークエラーです。しばらくしてから再試行してください。",
+    source: "ソース",
+    expanded: "展開後のURL",
+    titleFallback: "（タイトルなし）",
+    author: "作者",
+    download: "ダウンロード",
+    openOriginal: "元画像を開く",
+    footer:
+      "ヒント：oEmbed がブロックされた場合、自動的に HTML meta/ld+json でフォールバックします。",
+    navAbout: "について",
+    navContact: "お問い合わせ",
+    navPrivacy: "プライバシーポリシー",
+    navTerms: "利用規約",
+    aboutTitle: "私たちについて",
+    aboutDescription:
+      "TikTok サムネイルダウンローダーは、TikTok の動画からサムネイルをダウンロードするための無料のオンラインツールです。",
+    aboutFeature1: "無料で快速",
+    aboutFeature2: "インストール不要",
+    aboutFeature3: "多言語サポート",
+    contactTitle: "お問い合わせ",
+    contactDescription: "ご質問やご提案があれば、お聞かせください。",
+    contactEmail: "メール",
+    contactEmailPlaceholder: "your@email.com",
+    contactMessage: "メッセージ",
+    contactMessagePlaceholder: "メッセージ...",
+    contactSubmit: "送信",
+    contactSent: "送信されました！まもなく返答いたします。",
+    contactError: "送信に失敗しました。もう一度お試しください。",
+    privacyTitle: "プライバシーポリシー",
+    privacyDescription: "お客様のプライバシーは私たちにとって重要です。",
+    privacyCollectTitle: "収集する情報",
+    privacyCollectDescription:
+      "私たちは個人情報を収集しません。処理するデータはサムネイルを解析するために提供された TikTok URL のみです。",
+    privacyUseTitle: "情報の使用方法",
+    privacyUseDescription:
+      "提出された TikTok URL は、動画のサムネイルを取得するためだけに使用されます。ユーザーデータを保存、共有、または販売することはありません。",
+    privacyThirdTitle: "サードパーティサービス",
+    privacyThirdDescription:
+      "当サービスでは、TikTok の oEmbed API を使用して動画情報を取得しています。TikTok のデータ慣行については責任を負いません。",
+    privacyCookiesTitle: "Cookie",
+    privacyCookiesDescription: "Cookie は使用していません。",
+    privacyChangesTitle: "ポリシーの変更",
+    privacyChangesDescription:
+      "このプライバシーポリシーは随時更新される場合があります。変更は本ページに掲示されます。",
+    privacyContactTitle: "お問い合わせ",
+    privacyContactDescription:
+      "このプライバシーポリシーに関するご質問は、お気軽にお問い合わせください。",
+    termsTitle: "利用規約",
+    termsDescription: "本サービスをご利用になる前に、以下の利用規約をよくお読みください。",
+    termsAcceptTitle: "規約への同意",
+    termsAcceptDescription:
+      "本サービスにアクセスまたは利用することにより、本規約に同意したものとみなされます。同意されない場合は、本サービスをご利用にならないでください。",
+    termsUseTitle: "許可される利用",
+    termsUseDescription:
+      "本ツールは個人的かつ非商業的な目的にのみ使用できます。閲覧権限のある TikTok 動画のサムネイル取得にのみご利用ください。自動化・大量・商業利用は禁止されています。",
+    termsIpTitle: "知的財産",
+    termsIpDescription:
+      "本ツールを通じて取得されたすべてのサムネイルは、それぞれのクリエイターおよび権利保持者の所有物です。本サービスは TikTok から取得したコンテンツの所有権を主張しません。",
+    termsDisclaimerTitle: "免責事項",
+    termsDisclaimerDescription:
+      "本サービスはいかなる保証もなく「現状のまま」提供されます。本サービスは TikTok または ByteDance とは一切関係なく、推奨・後援されているものでもありません。",
+    termsChangesTitle: "規約の変更",
+    termsChangesDescription:
+      "当社はいつでも本規約を変更する権利を留保します。変更後も本サービスを引き続き利用することで、新しい規約に同意したものとみなされます。",
+    termsContactTitle: "お問い合わせ",
+    termsContactDescription: "本規約に関するご質問は、お気軽にお問い合わせください。",
+  },
+  es: {
+    appTitle: "Descargador de miniaturas de TikTok",
+    appSubtitle:
+      "Pega un enlace de TikTok, resuelve la miniatura y descárgala. (oEmbed primero, HTML como respaldo)",
+    inputLabel: "URL de TikTok",
+    inputPlaceholder: "p. ej. https://www.tiktok.com/@.../video/...",
+    resolveBtn: "Resolver miniatura",
+    resolving: "Resolviendo…",
+    invalidUrl: "Introduce una URL válida de TikTok.",
+    parseFailed: "No se pudo resolver. Inténtalo de nuevo más tarde.",
+    networkError: "Error de red. Inténtalo de nuevo más tarde.",
+    source: "Fuente",
+    expanded: "URL expandida",
+    titleFallback: "(Sin título)",
+    author: "Autor",
+    download: "Descargar",
+    openOriginal: "Abrir original",
+    footer:
+      "Consejo: si oEmbed está bloqueado, la app intentará un respaldo HTML meta/ld+json automáticamente.",
+    navAbout: "Acerca de",
+    navContact: "Contacto",
+    navPrivacy: "Política de privacidad",
+    navTerms: "Términos de uso",
+    aboutTitle: "Acerca de nosotros",
+    aboutDescription:
+      "Descargador de miniaturas de TikTok es una herramienta online gratuita que te ayuda a descargar miniaturas de videos de TikTok.",
+    aboutFeature1: "Rápido y gratis",
+    aboutFeature2: "Sin instalación",
+    aboutFeature3: "Soporte multiidioma",
+    contactTitle: "Contáctanos",
+    contactDescription: "¿Tienes preguntas o sugerencias? Nos encantaría saber de ti.",
+    contactEmail: "Correo",
+    contactEmailPlaceholder: "tu@correo.com",
+    contactMessage: "Mensaje",
+    contactMessagePlaceholder: "Tu mensaje...",
+    contactSubmit: "Enviar mensaje",
+    contactSent: "¡Mensaje enviado! Te responderemos pronto.",
+    contactError: "Error al enviar. Inténtalo de nuevo.",
+    privacyTitle: "Política de privacidad",
+    privacyDescription: "Tu privacidad es importante para nosotros.",
+    privacyCollectTitle: "Información que recopilamos",
+    privacyCollectDescription:
+      "No recopilamos información personal. El único dato que procesamos es la URL de TikTok que proporcionas para resolver miniaturas.",
+    privacyUseTitle: "Cómo usamos la información",
+    privacyUseDescription:
+      "La URL de TikTok que envías se usa únicamente para recuperar la miniatura del video. No almacenamos, compartimos ni vendemos datos de usuarios.",
+    privacyThirdTitle: "Servicios de terceros",
+    privacyThirdDescription:
+      "Nuestro servicio usa la API de oEmbed de TikTok para obtener información del video. No somos responsables de las prácticas de datos de TikTok.",
+    privacyCookiesTitle: "Cookies",
+    privacyCookiesDescription: "No usamos cookies para rastrear usuarios.",
+    privacyChangesTitle: "Cambios en esta política",
+    privacyChangesDescription:
+      "Podemos actualizar esta política de privacidad ocasionalmente. Cualquier cambio se publicará en esta página.",
+    privacyContactTitle: "Contáctanos",
+    privacyContactDescription:
+      "Si tienes alguna pregunta sobre esta política de privacidad, por favor contáctanos.",
+    termsTitle: "Términos de uso",
+    termsDescription: "Lee atentamente estos términos antes de usar nuestro servicio.",
+    termsAcceptTitle: "Aceptación de los términos",
+    termsAcceptDescription:
+      "Al acceder y usar este servicio, aceptas quedar vinculado por estos términos. Si no estás de acuerdo, por favor no uses este servicio.",
+    termsUseTitle: "Uso permitido",
+    termsUseDescription:
+      "Esta herramienta es solo para uso personal y no comercial. Solo puedes usarla para acceder a miniaturas de videos de TikTok que tienes derecho a ver. Queda prohibido el uso automatizado, masivo o comercial.",
+    termsIpTitle: "Propiedad intelectual",
+    termsIpDescription:
+      "Todas las miniaturas obtenidas a través de esta herramienta son propiedad de sus respectivos creadores y titulares de derechos. Este servicio no reclama la propiedad de ningún contenido obtenido de TikTok.",
+    termsDisclaimerTitle: "Aviso legal",
+    termsDisclaimerDescription:
+      "Este servicio se proporciona 'tal cual' sin garantías de ningún tipo. No estamos afiliados, respaldados ni patrocinados por TikTok o ByteDance de ninguna manera.",
+    termsChangesTitle: "Cambios en los términos",
+    termsChangesDescription:
+      "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado del servicio tras los cambios constituye la aceptación de los nuevos términos.",
+    termsContactTitle: "Contacto",
+    termsContactDescription:
+      "Si tienes alguna pregunta sobre estos términos, no dudes en contactarnos.",
+  },
+} satisfies Record<Locale, Record<string, string>>;
+
+export function t(locale: Locale, key: keyof (typeof dict)["en"]) {
+  return dict[locale][key] ?? dict.en[key];
+} 
